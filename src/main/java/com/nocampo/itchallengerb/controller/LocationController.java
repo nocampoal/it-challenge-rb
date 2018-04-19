@@ -17,6 +17,7 @@ public class LocationController {
 	
 	@GetMapping("/verify")
 	public String verifyConnection(){
+		
 		return "Connection succesfull";
 	}
 
