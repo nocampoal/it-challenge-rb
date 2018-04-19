@@ -13,6 +13,13 @@ public class Location {
 	
 	
 	
+	public Location() {
+		
+	}
+	public Location(String location) {
+		super();
+		this.location = location;
+	}
 	/**
 	 * @return the id
 	 */
