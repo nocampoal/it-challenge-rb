@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +29,8 @@ import com.nocampo.itchallengerb.repository.LocationRepository;
 @RequestMapping("/boards/{userName}/")
 public class LocationController {
 	
+	private static final Log LOG = LogFactory.getLog(LocationController.class);
+	
 	@Autowired
 	LocationRepository locationRepository;
 	
@@ -36,12 +40,13 @@ public class LocationController {
 	
 	@GetMapping("/verify")
 	public String verifyConnection(@PathVariable String userName){
+		LOG.info("Method: verify ");
 		return "Connection succesfull : "+userName;
 	}
 	
 	@GetMapping(path = "/addLocation/{nameLocation}",produces=MediaType.APPLICATION_JSON_VALUE)
 	public Channel save(@PathVariable String nameLocation) throws JAXBException, IOException {
-		 
+		 LOG.info("Method: addLocation - PARAM: "+nameLocation);
 		 LimitDeclaration limitDeclaration = service.getForecastForLocation(nameLocation, DegreeUnit.CELSIUS);
 		 List<Channel> list = limitDeclaration.all();
 		 if(!list.isEmpty()){
