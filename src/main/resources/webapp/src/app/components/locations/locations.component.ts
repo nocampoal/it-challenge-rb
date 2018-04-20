@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-locations',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(public locationService: LocationService) { }
+  locations : any;
+  
   ngOnInit() {
+      console.log(" getLocations locationService ");
+      this.locationService.getLocations();
   }
 
 }
