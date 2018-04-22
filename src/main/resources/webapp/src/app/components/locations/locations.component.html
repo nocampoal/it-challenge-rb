@@ -1,9 +1,9 @@
-  <app-add-location></app-add-location>
+  <app-add-location (actualizarLocaciones)="actualizarLocs($event)"></app-add-location>
   <div *ngIf="locations?.length > 0;else noLocations">
     <ul *ngFor="let location of locations" class="collection" >
         <li class="collection-item" >
           <strong>{{location.channel.item.title}}</strong> 
-          <a href="#" class="secondary-content">
+          <a (click)="deleteLocation(location.id)" class="secondary-content">
             <i  class="fa fa-trash"></i>
           </a>
         </li>
@@ -17,7 +17,9 @@
 
   
   <ng-template #noLocations>
-    <h5>Por favor, agregue locaciones de su interes!</h5>
+    <div class="card-panel grey lighten-1">
+      <span class="white-text">Por favor, agregue locaciones de su interes!</span>
+    </div>
   </ng-template>
 
 

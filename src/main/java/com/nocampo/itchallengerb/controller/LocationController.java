@@ -11,15 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.fedy2.weather.YahooWeatherService;
-import com.github.fedy2.weather.YahooWeatherService.LimitDeclaration;
-import com.github.fedy2.weather.data.unit.DegreeUnit;
 import com.nocampo.itchallengerb.model.Location;
-import com.nocampo.itchallengerb.repository.LocationRepository;
 import com.nocampo.itchallengerb.service.LocationService;
 
 
@@ -35,8 +33,8 @@ public class LocationController {
 	LocationService locationService;
 
 	
-	@GetMapping(path = "/addLocation/{nameLocation}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location saveLocation(@PathVariable String nameLocation) throws JAXBException, IOException {
+	@PostMapping(path = "/location",produces=MediaType.APPLICATION_JSON_VALUE)
+	public Location addLocation(@RequestBody String nameLocation) throws JAXBException, IOException {
 		 LOG.info("Method: addLocation - PARAM: "+nameLocation);
 		 Location location = locationService.addLocation(nameLocation);
 		 return location;

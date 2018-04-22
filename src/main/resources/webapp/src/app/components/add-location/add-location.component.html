@@ -1,3 +1,15 @@
-<p>
-  add-location works!
-</p>
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">New Location</span>
+    <form (ngSubmit)="onSubmit()" class="col s6">
+      <div class="row">
+        <div class="input-field col-s6">
+          <input type="text" placeholder="p. ej. Buenos Aires" [(ngModel)]="location" name="location">
+          <label>Name</label>
+        </div>
+        <span *ngIf="showPanel" class="red-text"> Location not found </span>
+      </div>
+      <input type="submit" class="btn light-blue" >
+    </form>
+  </div>
+</div>
