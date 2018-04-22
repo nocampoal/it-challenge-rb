@@ -69,9 +69,6 @@ public class LocationController {
 		return "Connection succesfull : "+userName;
 	}
 
-	public LocationController() throws Exception {
-		
-	}
 	
 	
 	
