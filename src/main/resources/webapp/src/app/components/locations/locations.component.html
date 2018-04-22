@@ -1,11 +1,23 @@
-<div class="container">
-  
-  <nav>
-    <div class="nav-wrapper light-blue">
-      <a href="/" class="brand-logo center">
-        Angular App
-    </a>
-    </div>
-  </nav>
   <app-add-location></app-add-location>
-</div>
+  <div *ngIf="locations?.length > 0;else noLocations">
+    <ul *ngFor="let location of locations" class="collection" >
+        <li class="collection-item" >
+          <strong>{{location.channel.item.title}}</strong> 
+          <a href="#" class="secondary-content">
+            <i  class="fa fa-trash"></i>
+          </a>
+        </li>
+        <a [routerLink]="['/location-detail', location.id]">
+          <li class="collection-item" >
+            <h5> Temperatura actual : {{location.channel.item.condition.temp}} °C - {{location.channel.item.condition.text}} </h5>
+          </li>
+      </a>
+    </ul>
+  </div>
+
+  
+  <ng-template #noLocations>
+    <h5>Por favor, agregue locaciones de su interes!</h5>
+  </ng-template>
+
+

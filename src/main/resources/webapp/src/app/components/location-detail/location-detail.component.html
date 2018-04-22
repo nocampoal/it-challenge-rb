@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+   <h5> Pronóstico</h5>
+  </div>
+  
+  <table class="">
+    <thead>
+      <tr>
+          <th>Dia</th>
+          <th>Fecha</th>
+          <th>Minima</th>
+          <th>Maxima</th>
+          <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let forecast of location.channel.item.forecasts">
+      <tr>
+        <td>{{forecast.day}}</td>
+        <td>{{forecast.date | date:'dd-MM-yyyy'}}</td>
+        <td>{{forecast.low}} ºC</td>
+        <td>{{forecast.high}} ºC</td>
+        <td>{{forecast.text}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn red" >Delete Location</button>
+</div>
+

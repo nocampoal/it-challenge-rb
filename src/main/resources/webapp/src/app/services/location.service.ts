@@ -7,12 +7,12 @@ export class LocationService {
 
   constructor(private http: HttpClient) { }
 
-
+  
   getLocations() { 
-    console.log("pase por el service")
-    //this.http.get('http://localhost:8080/contacts').subscribe(data => {
-    
-   
+    return this.http.get('http://localhost:8080/boards/nicolas/locations');
   }
 
+  getLocation(id){
+    return this.http.get('http://localhost:8080/boards/nicolas/location/'+id);
+  }
 }

@@ -9,12 +9,18 @@ import { LocationService } from './services/location.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LocationDetailComponent } from './components/location-detail/location-detail.component';
 
 const appRoutes: Routes = [
   {
     path: 'locations',
     component: LocationsComponent,
     data: { title: 'Locations List' }
+  },
+  {
+    path: 'location-detail/:id',
+    component: LocationDetailComponent,
+    data: {title: 'Location detail'}
   },
   { path: '',
     redirectTo: '/locations',
@@ -30,7 +36,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LocationsComponent,
-    AddLocationComponent
+    AddLocationComponent,
+    LocationDetailComponent
   ],
   imports: [
     BrowserModule,

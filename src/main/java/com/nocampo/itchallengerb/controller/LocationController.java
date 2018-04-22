@@ -1,7 +1,6 @@
 package com.nocampo.itchallengerb.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -18,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.fedy2.weather.YahooWeatherService;
 import com.github.fedy2.weather.YahooWeatherService.LimitDeclaration;
-import com.github.fedy2.weather.data.Channel;
 import com.github.fedy2.weather.data.unit.DegreeUnit;
 import com.nocampo.itchallengerb.model.Location;
 import com.nocampo.itchallengerb.repository.LocationRepository;
+import com.nocampo.itchallengerb.service.LocationService;
+
 
 
 @RestController
@@ -32,55 +32,44 @@ public class LocationController {
 	private static final Log LOG = LogFactory.getLog(LocationController.class);
 	
 	@Autowired
-	LocationRepository locationRepository;
-	
-	YahooWeatherService service = new YahooWeatherService();
-	
-	
-	
-	@GetMapping("/verify")
-	public String verifyConnection(@PathVariable String userName){
-		LOG.info("Method: verify ");
-		return "Connection succesfull : "+userName;
-	}
+	LocationService locationService;
+
 	
 	@GetMapping(path = "/addLocation/{nameLocation}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Channel save(@PathVariable String nameLocation) throws JAXBException, IOException {
+	public Location saveLocation(@PathVariable String nameLocation) throws JAXBException, IOException {
 		 LOG.info("Method: addLocation - PARAM: "+nameLocation);
-		 LimitDeclaration limitDeclaration = service.getForecastForLocation(nameLocation, DegreeUnit.CELSIUS);
-		 List<Channel> list = limitDeclaration.all();
-		 if(!list.isEmpty()){
-			 Location location = new Location(nameLocation);
-			 locationRepository.save(location);
-			 return list.get(0);
-		 }
-		 
-		 return null;
+		 Location location = locationService.addLocation(nameLocation);
+		 return location;
 	    }
 	
 	
 	@GetMapping(path = "/locations",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Iterable<Location> findAll() {
-		 return locationRepository.findAll();	 
+	public Iterable<Location> getAllLocations() {
+		 Iterable<Location> lista = locationService.getAllLocations();
+		 return lista; 
 	}
 	
 	
 	
 	@GetMapping(path = "/location/{idLocation}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location findById(@PathVariable String idLocation) {
-		return locationRepository.findById(idLocation).get();	 
+	public Location findById(@PathVariable String idLocation) throws JAXBException, IOException {
+		Location location = locationService.getLocationById(idLocation);
+		   return location;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/location/{idLocation}")
     public String deleteLocation(@PathVariable String idLocation) {
-        Location location = locationRepository.findById(idLocation).get();
-        locationRepository.delete(location);
-
+		locationService.deleteLocation(idLocation);
         return "";
     }
 	
 	
-	
+
+	@GetMapping("/verify")
+	public String verifyConnection(@PathVariable String userName){
+		LOG.info("Method: verify ");
+		return "Connection succesfull : "+userName;
+	}
 
 	public LocationController() throws Exception {
 		

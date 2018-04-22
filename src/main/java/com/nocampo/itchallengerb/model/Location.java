@@ -3,12 +3,15 @@ package com.nocampo.itchallengerb.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.github.fedy2.weather.data.Channel;
+
 @Document(collection = "locations")
 public class Location {
 	
 	@Id
 	private String id;
 	private String location;
+	private Channel channel;
 	
 	
 	
@@ -43,6 +46,18 @@ public class Location {
 	 */
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	/**
+	 * @return the channel
+	 */
+	public Channel getChannel() {
+		return channel;
+	}
+	/**
+	 * @param channel the channel to set
+	 */
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 	
 	
