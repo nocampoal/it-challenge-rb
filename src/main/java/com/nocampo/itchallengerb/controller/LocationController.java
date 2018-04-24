@@ -36,10 +36,16 @@ public class LocationController {
 
 	
 	@PostMapping(path = "/location",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location addLocation(@RequestBody String nameLocation) throws JAXBException, IOException {
+	public ResponseEntity<Location> addLocation(@RequestBody String nameLocation)  {
 		 LOG.info("Method: addLocation - PARAM: "+nameLocation);
-		 Location location = locationService.addLocation(nameLocation);
-		 return location;
+		 Location location = new Location();
+		try {
+			location = locationService.addLocation(nameLocation);
+		} catch (Exception e) {
+			LOG.error("addLocation error: "+e.getMessage());
+			 return new ResponseEntity<Location>(location, HttpStatus.NOT_FOUND); 
+		}
+		 return new ResponseEntity<Location>(location, HttpStatus.OK); 
 	    }
 	
 	
@@ -52,15 +58,22 @@ public class LocationController {
 	
 	
 	@GetMapping(path = "/location/{idLocation}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location findById(@PathVariable String idLocation) throws JAXBException, IOException {
-		Location location = locationService.getLocationById(idLocation);
-		   return location;
+	public ResponseEntity<Location> findById(@PathVariable String idLocation) {
+			Location location = new Location();
+			try {
+				location = locationService.getLocationById(idLocation);
+			} catch (Exception e) {
+				LOG.error("findById Yahoo weather error");
+				return  new ResponseEntity<Location>(location, HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<Location>(location, HttpStatus.OK); 
 	}
 	
+	
 	@RequestMapping(method=RequestMethod.DELETE, value="/location/{idLocation}")
-    public String deleteLocation(@PathVariable String idLocation) {
+    public ResponseEntity<String> deleteLocation(@PathVariable String idLocation) {
 		locationService.deleteLocation(idLocation);
-        return "";
+		return new ResponseEntity<String>("", HttpStatus.OK); 
     }
 	
 	

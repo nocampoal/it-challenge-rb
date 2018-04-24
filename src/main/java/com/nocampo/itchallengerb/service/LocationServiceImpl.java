@@ -27,16 +27,11 @@ public class LocationServiceImpl implements LocationService{
 	
 
 	@Override
-	public Location getLocationById(String idLocation) {
+	public Location getLocationById(String idLocation) throws JAXBException, IOException {
 			Location location = locationRepository.findById(idLocation).get();
 			LimitDeclaration limit = yahooWeather.getForecastForLocation(location.getLocation(), DegreeUnit.CELSIUS);
-			List<Channel> list = new ArrayList<Channel>();
-			try {
-				list = limit.all();
-				location.setChannel(list.get(0));
-			} catch (JAXBException | IOException e) {
-				e.printStackTrace();
-			}
+			List<Channel> list = limit.all();
+			location.setChannel(list.get(0));
 			
 			return location;
 			
@@ -45,22 +40,16 @@ public class LocationServiceImpl implements LocationService{
 	
 	
 	@Override
-	public Location addLocation(String nameLocation) {
+	public Location addLocation(String nameLocation) throws Exception {
 		Location location = new Location(nameLocation);
 		Channel channel = new Channel();
 		LimitDeclaration limitDeclaration = yahooWeather.getForecastForLocation(nameLocation, DegreeUnit.CELSIUS);
-		List<Channel> list = new ArrayList<Channel>();
-		try {
-			
-			list = limitDeclaration.all();
-			if(!list.isEmpty()){
-				 locationRepository.save(location);
-				 channel = list.get(0);
-			 }
-			
-		} catch (JAXBException | IOException e) {
-			e.printStackTrace();
-		}
+		List<Channel> list = limitDeclaration.all();
+		if(list.isEmpty()){
+			throw new Exception("No se encontro la locacion"); 
+		 }	
+		locationRepository.save(location);
+		channel = list.get(0);
 		location.setChannel(channel);
 		return location;
 		 
@@ -90,6 +79,7 @@ public class LocationServiceImpl implements LocationService{
 		Location location = locationRepository.findById(idLocation).get();
         locationRepository.delete(location);	
 	}
+	
 	
 	public LocationServiceImpl() throws Exception {
 		
