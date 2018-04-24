@@ -24,10 +24,13 @@ export class LocationDetailComponent implements OnInit {
    getLocationDetail(id){
      this.locationService.getLocation(id).subscribe(data => {
       console.log(data);
-      this.location = data;
-      this.forecasts = this.location.channel.item.forecasts;
-      this.title = this.location.channel.item.title;
-      
+      this.setValues(data);
+      this.locationService.getLocationPolling(id).subscribe(loc =>{
+        console.log("detail polling: "+loc);
+        this.setValues(loc);
+      }
+
+      )
     })
    }
 
@@ -38,6 +41,12 @@ export class LocationDetailComponent implements OnInit {
           this.router.navigate(['/']);
         })
     }
+  }
+
+  setValues(loc){
+    this.location = loc;
+    this.forecasts = loc.channel.item.forecasts;
+    this.title = loc.channel.item.title;
   }
 
 }

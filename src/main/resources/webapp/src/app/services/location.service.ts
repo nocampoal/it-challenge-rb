@@ -43,6 +43,15 @@ export class LocationService {
 
   getLocationsPolling = () => {
     return IntervalObservable
-    .create(10000)
-    .flatMap((i) => this.http.get(this.urlAPIAllLocations))}
+    .create(43200)
+    .flatMap((i) => this.http.get(this.urlAPIAllLocations));
+  }
+  
+
+  getLocationPolling = (id) => {
+    return IntervalObservable
+    .create(43200)
+    .flatMap((i) => this.http.get(this.urlAPI+id));
+  }
 }
+
