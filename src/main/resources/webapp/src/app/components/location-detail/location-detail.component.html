@@ -1,20 +1,21 @@
 <div class="panel panel-default">
   <div class="panel-heading">
    <h5> Forecast</h5>
+   <h6> {{title}}</h6>
   </div>
   
-  <table class="">
+  <table >
     <thead>
       <tr>
-          <th>Dia</th>
-          <th>Fecha</th>
-          <th>Minima</th>
-          <th>Maxima</th>
-          <th>Estado</th>
+          <th>DAY</th>
+          <th>DATE</th>
+          <th>LOW F</th>
+          <th>HIGH F</th>
+          <th>STATUS</th>
       </tr>
     </thead>
 
-    <tbody *ngFor="let forecast of location.channel.item.forecasts">
+    <tbody *ngFor="let forecast of forecasts" >
       <tr>
         <td>{{forecast.day}}</td>
         <td>{{forecast.date | date:'dd-MM-yyyy'}}</td>
@@ -24,6 +25,10 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn red" >Delete Location</button>
+  <br>
+  <div class="center">
+      <a href="/" class="btn  grey lighten-1">Volver</a>
+    <button (click)="deleteLocation(location.id)" class="btn red" >Delete Location</button>
+  </div>
 </div>
 
