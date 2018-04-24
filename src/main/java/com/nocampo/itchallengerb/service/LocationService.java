@@ -1,8 +1,10 @@
 package com.nocampo.itchallengerb.service;
 
+
+
 import com.nocampo.itchallengerb.model.Location;
 
-public interface LocationService {
+ public	interface LocationService {
 
 	Location getLocationById(String idLocation);
 

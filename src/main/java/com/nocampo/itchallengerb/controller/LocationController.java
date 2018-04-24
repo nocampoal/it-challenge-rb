@@ -7,7 +7,9 @@ import javax.xml.bind.JAXBException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +44,9 @@ public class LocationController {
 	
 	
 	@GetMapping(path = "/locations",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Iterable<Location> getAllLocations() {
+	public ResponseEntity<Iterable<Location>> getAllLocations() {
 		 Iterable<Location> lista = locationService.getAllLocations();
-		 return lista; 
+		 return new ResponseEntity<Iterable<Location>>(lista, HttpStatus.OK); 
 	}
 	
 	

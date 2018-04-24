@@ -9,7 +9,7 @@
         </li>
         <a [routerLink]="['/location-detail', location.id]">
           <li class="collection-item" >
-            <h5> Temperatura actual : {{location.channel.item.condition.temp}} °C - {{location.channel.item.condition.text}} </h5>
+            <h5> Actual temperature : {{location.channel.item.condition.temp}} °C - {{location.channel.item.condition.text}}    <img style="margin-left: 25px" src="http://l.yimg.com/a/i/us/we/52/{{location.channel.item.condition.code}}.gif"> </h5>
           </li>
       </a>
     </ul>
